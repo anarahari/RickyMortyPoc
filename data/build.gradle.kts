@@ -28,9 +28,6 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
@@ -42,7 +39,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.apollo.runtime)
     implementation(libs.dagger)
-    //ksp(libs.dagger.compiler)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
 }

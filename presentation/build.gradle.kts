@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.apollo)
-    //alias(libs.plugins.ksp)
 }
 
 android {
@@ -47,7 +46,6 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.navigation.compose)
     implementation(libs.dagger)
-    //ksp(libs.dagger.compiler)
     implementation(libs.coil.compose)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
