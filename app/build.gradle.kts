@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.apollo)
     alias(libs.plugins.kotlinter)
-    alias(libs.plugins.ksp)
+    //alias(libs.plugins.ksp)
 }
 
 android {
@@ -43,7 +43,10 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":presentation"))
+    implementation(project(":common"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
