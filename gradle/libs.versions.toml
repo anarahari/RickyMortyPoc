@@ -61,7 +61,8 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version = "4.4.1" }
-apollo = {id = "com.apollographql.apollo",version = "4.0.1"}
-ksp = {id = "com.google.devtools.ksp",version = "2.0.0-1.0.22"}
-androidLibrary = { id = "com.android.library"}
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "10.3.0" }
+apollo = { id = "com.apollographql.apollo", version = "4.0.1" }
+ksp = { id = "com.google.devtools.ksp", version = "2.0.0-1.0.22" }
+androidLibrary = { id = "com.android.library" }
 

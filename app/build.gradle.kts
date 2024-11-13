@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.apollo)
-    alias(libs.plugins.kotlinter)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -37,6 +37,13 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+ktlint {
+    android = true
+    outputToConsole = true
+    ignoreFailures = false
+    verbose = true
 }
 
 dependencies {
