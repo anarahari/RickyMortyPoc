@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
 
-    suspend fun getCharacters() : Flow<PagingData<GetCharactersQuery.Result>>
+    suspend fun getCharacters(): Flow<PagingData<GetCharactersQuery.Result>>
 }
