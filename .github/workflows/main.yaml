@@ -3,7 +3,7 @@ name: Android CI
 on:
   pull_request:
     branches:
-      - main
+      - '*'
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
@@ -37,7 +37,6 @@ jobs:
       # Step 4: Build the project
       - name: Build with Gradle
         run: ./gradlew build
-
 
       # Step 5: Clean and Build with Gradle
       - name: Clean and Build with Gradle
