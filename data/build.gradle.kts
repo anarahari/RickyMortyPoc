@@ -45,3 +45,12 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
 }
 
+apollo {
+    service("GraphQl") {
+        packageName.set("com.data.graphql")
+        introspection {
+            endpointUrl.set("https://rickandmortyapi.com/graphql")
+            schemaFile.set(file("src/main/graphql/schema.graphqls"))
+        }
+    }
+}

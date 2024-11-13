@@ -1,7 +1,7 @@
 package com.compose.domain.repository
 
 import androidx.paging.PagingData
-import com.common.graphql.GetCharactersQuery
+import com.data.graphql.GetCharactersQuery
 import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {

@@ -40,13 +40,3 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
-
-apollo {
-    service("GraphQl") {
-        packageName.set("com.common.graphql")
-        introspection {
-            endpointUrl.set("https://rickandmortyapi.com/graphql")
-            schemaFile.set(file("src/main/graphql/schema.graphqls"))
-        }
-    }
-}
