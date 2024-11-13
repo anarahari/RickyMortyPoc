@@ -42,7 +42,7 @@ dependencies {
 }
 
 apollo {
-    service("GraphQl"){
+    service("GraphQl") {
         packageName.set("com.common.graphql")
         introspection {
             endpointUrl.set("https://rickandmortyapi.com/graphql")

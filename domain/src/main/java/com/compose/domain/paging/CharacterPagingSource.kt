@@ -19,17 +19,9 @@ class CharacterPagingSource(
             if (response.hasErrors()) {
                 LoadResult.Error(Exception(response.errors?.joinToString(", ") { it.message }))
             } else {
-                val characters =
-                    response.data
-                        ?.characters
-                        ?.results
-                        ?.filterNotNull() ?: emptyList()
+                val characters = response.data?.characters?.results?.filterNotNull() ?: emptyList()
                 val nextKey =
-                    if (response.data
-                            ?.characters
-                            ?.info
-                            ?.next != null
-                    ) {
+                    if (response.data?.characters?.info?.next != null) {
                         page + 1
                     } else {
                         null
