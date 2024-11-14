@@ -1,4 +1,4 @@
-package com.compose.rickymortypoc
+package com.compose.common
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.compose.rickymortypoc", appContext.packageName)
+        assertEquals("com.compose.common", appContext.packageName)
     }
 }

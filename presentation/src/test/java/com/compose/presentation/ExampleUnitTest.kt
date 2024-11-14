@@ -1,4 +1,4 @@
-package com.compose.rickymortypoc
+package com.compose.presentation
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
