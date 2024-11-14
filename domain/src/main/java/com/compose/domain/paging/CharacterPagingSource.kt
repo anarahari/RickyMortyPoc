@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Optional
-import com.data.graphql.GetCharactersQuery
+import com.common.graphql.GetCharactersQuery
 
 class CharacterPagingSource(
     private val apolloClient: ApolloClient,
