@@ -1,11 +1,14 @@
-package com.compose.domain.paging
+package com.compose.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Optional
 import com.common.graphql.GetCharactersQuery
 
+/**
+ * Pagination data to get results
+ * Useful for future development
+ * **/
 class CharacterPagingSource(
     private val apolloClient: ApolloClient,
 ) : PagingSource<Int, GetCharactersQuery.Result>() {
@@ -13,19 +16,19 @@ class CharacterPagingSource(
         val page = params.key ?: 1
 
         return try {
-            val response = apolloClient.query(GetCharactersQuery(Optional.present(page))).execute()
-
+            // val response = apolloClient.query(GetCharactersQuery(Optional.present(page))).execute()
+            val response = apolloClient.query(GetCharactersQuery()).execute()
             // Check for errors in the response
             if (response.hasErrors()) {
                 LoadResult.Error(Exception(response.errors?.joinToString(", ") { it.message }))
             } else {
                 val characters = response.data?.characters?.results?.filterNotNull() ?: emptyList()
-                val nextKey =
-                    if (response.data?.characters?.info?.next != null) {
+                val nextKey = page + 1
+                    /*if (response.data?.characters?.info?.next != null) {
                         page + 1
                     } else {
                         null
-                    }
+                    }*/
 
                 LoadResult.Page(
                     data = characters,

@@ -1,10 +1,9 @@
 package com.compose.domain.repository
 
-import androidx.paging.PagingData
-import com.common.graphql.GetCharactersQuery
+import com.compose.domain.mapper.CharacterModel
 import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
 
-    suspend fun getCharacters(): Flow<PagingData<GetCharactersQuery.Result>>
+    suspend fun getCharacters(): Flow<List<CharacterModel>>
 }
