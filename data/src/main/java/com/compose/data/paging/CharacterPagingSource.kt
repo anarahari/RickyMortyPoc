@@ -16,9 +16,8 @@ class CharacterPagingSource(
         val page = params.key ?: 1
 
         return try {
-            //val response = apolloClient.query(GetCharactersQuery(Optional.present(page))).execute()
+            // val response = apolloClient.query(GetCharactersQuery(Optional.present(page))).execute()
             val response = apolloClient.query(GetCharactersQuery()).execute()
-
             // Check for errors in the response
             if (response.hasErrors()) {
                 LoadResult.Error(Exception(response.errors?.joinToString(", ") { it.message }))

@@ -3,7 +3,7 @@ package com.compose.data.datamapper
 import com.common.graphql.GetCharactersQuery
 import com.compose.domain.mapper.CharacterModel
 
-fun getCharactersQueryToCharacterModel(results : GetCharactersQuery.Result?) : CharacterModel {
+fun getCharactersQueryToCharacterModel(results: GetCharactersQuery.Result?): CharacterModel {
     return CharacterModel(
         id = results?.character?.id.orEmpty(),
         name = results?.character?.name.orEmpty(),
