@@ -44,6 +44,6 @@ fun CustomAppBar(
 
 @Preview(showBackground = true,widthDp = 200, heightDp = 100)
 @Composable
-fun SquareComposablePreview() {
+fun ComposablePreview() {
     CustomAppBar("All Characters")
 }
