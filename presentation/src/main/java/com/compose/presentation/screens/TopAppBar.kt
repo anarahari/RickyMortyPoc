@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.compose.presentation.R
 
 @Composable
-fun customAppBar(
+fun CustomAppBar(
     title: String,
     backAction: (() -> Unit)? = null
 ) {
@@ -45,5 +45,5 @@ fun customAppBar(
 @Preview(showBackground = true,widthDp = 200, heightDp = 100)
 @Composable
 fun SquareComposablePreview() {
-    customAppBar("All Characters")
+    CustomAppBar("All Characters")
 }
