@@ -1,31 +1,16 @@
-query GetCharacters($page:Int) {
-    characters(page: $page) {
+query GetCharacters {
+    characters {
         results {
             ...character
-        }
-        info {
-            next
-            prev
-            pages
-            count
         }
     }
 }
 
 fragment character on Character{
-    name
     id
+    name
     image
-    status
-    species
     gender
-    location {
-        ...location
-    }
-}
-
-fragment location on Location{
-    id
-    name
-    dimension
+    species
+    status
 }
