@@ -5,11 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,14 +34,15 @@ fun CustomAppBar(
                 .padding(5.dp)) {
                 Icon(painter = painterResource(R.drawable.ic_back_arrow), contentDescription = "Back Arrow")
             }
-            Spacer(modifier = Modifier.width(12.dp))
         }
-        Text(text = title)
+        Text(text = title,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onBackground)
     }
 }
 
 @Preview(showBackground = true,widthDp = 200, heightDp = 100)
 @Composable
 fun ComposablePreview() {
-    CustomAppBar("All Characters")
+    CustomAppBar("All characters")
 }

@@ -6,6 +6,7 @@ import com.compose.domain.usecase.GetCharactersUseCase
 import com.compose.presentation.uistate.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -15,7 +16,7 @@ class CharacterViewModel @Inject constructor(private val characterUseCase: GetCh
     ViewModel() {
 
     private val _charactersState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
-    val charactersState = _charactersState.asStateFlow()
+    val charactersState: StateFlow<UiState> = _charactersState.asStateFlow()
 
     init {
         getCharacters()
