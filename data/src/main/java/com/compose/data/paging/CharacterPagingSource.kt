@@ -1,4 +1,4 @@
-package com.compose.domain.paging
+package com.compose.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -6,6 +6,10 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Optional
 import com.common.graphql.GetCharactersQuery
 
+/**
+ * Pagination data to get results
+ * Useful for future development
+ * **/
 class CharacterPagingSource(
     private val apolloClient: ApolloClient,
 ) : PagingSource<Int, GetCharactersQuery.Result>() {
