@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.compose.presentation.R
 
@@ -39,10 +38,4 @@ fun CustomAppBar(
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground)
     }
-}
-
-@Preview(showBackground = true,widthDp = 200, heightDp = 100)
-@Composable
-fun ComposablePreview() {
-    CustomAppBar("All characters")
 }
