@@ -21,16 +21,16 @@ import com.compose.presentation.R
 @Composable
 fun CustomAppBar(
     title: String,
-    backAction: (() -> Unit)? = null
+    onBackButtonPressed: (() -> Unit)? = null
 ) {
     Row(modifier = Modifier.fillMaxWidth()
-        .height(70.dp)
+        .height(72.dp)
         .background(MaterialTheme.colorScheme.background),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically) {
-        backAction?.let {
-            Box(modifier = Modifier.clickable { backAction }
-                .padding(5.dp)) {
+        onBackButtonPressed?.let {
+            Box(modifier = Modifier.clickable { onBackButtonPressed }
+                .padding(8.dp)) {
                 Icon(painter = painterResource(R.drawable.ic_back_arrow), contentDescription = "Back Arrow")
             }
         }

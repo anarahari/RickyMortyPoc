@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
 import com.compose.presentation.screens.CharacterListScreen
-import com.compose.presentation.ui.theme.AppTheme
+import com.compose.presentation.ui.theme.RMAppTheme
 import com.compose.presentation.viewmodel.CharacterViewModel
 import com.compose.presentation.viewmodel.ViewModelFactoryProvider
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         (application as BaseApplication).appComponent.inject(this)
         enableEdgeToEdge()
         setContent {
-            AppTheme {
+            RMAppTheme {
                 val characterViewModel: CharacterViewModel =
                     ViewModelProvider(
                         LocalContext.current as ComponentActivity,

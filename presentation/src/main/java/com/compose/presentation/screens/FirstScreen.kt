@@ -26,7 +26,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.compose.domain.mapper.CharacterModel
 import com.compose.presentation.R
-import com.compose.presentation.uistate.UiState
 import com.compose.presentation.viewmodel.CharacterViewModel
 
 @Composable
@@ -40,25 +39,21 @@ fun CharacterListScreen(viewModel: CharacterViewModel, modifier: Modifier = Modi
     ) {
         CustomAppBar(stringResource(R.string.all_characters), null)
 
-        when (characterState) {
-            is UiState.Loading -> {
-                CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
-            }
+        if (characterState.isLoading) {
+            CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
+        }
 
-            is UiState.Error -> {
-                (characterState as UiState.Error).msg?.let {
-                    Text(
-                        text = it,
-                        color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier
-                    )
-                }
-            }
+        if (characterState.error.isNotEmpty()) {
+            Text(
+                text = characterState.error.toString(),
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier
+            )
+        }
 
-            is UiState.Success<*> -> {
-                val charactersList = remember { (characterState as UiState.Success<*>).data }
-                CharactersList(charactersList as List<CharacterModel>)
-            }
+        characterState.data?.let {
+            val charactersList = remember { characterState.data }
+            CharactersList(charactersList as List<CharacterModel>)
         }
     }
 }
@@ -80,9 +75,11 @@ private fun CharactersList(characterList: List<CharacterModel>) {
 
 @Composable
 private fun CharacterItem(character: CharacterModel) {
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(8.dp)) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
                 model = character.image,
