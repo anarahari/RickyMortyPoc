@@ -22,4 +22,3 @@ internal class CharacterRepositoryImpl @Inject constructor(private val apolloCli
         }
     }
 }
-

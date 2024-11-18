@@ -15,9 +15,11 @@ object ApolloClientModule {
     @Provides
     @Singleton
     fun provideApolloClient(): ApolloClient {
-        val httpClient = OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }).build()
+        val httpClient = OkHttpClient.Builder().addInterceptor(
+            HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+        ).build()
 
         return ApolloClient.Builder().serverUrl(CommonConstants.RICK_MORTY_URL)
             .okHttpClient(httpClient)

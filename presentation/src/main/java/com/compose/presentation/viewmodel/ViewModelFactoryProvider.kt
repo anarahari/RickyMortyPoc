@@ -15,7 +15,7 @@ class ViewModelFactoryProvider
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(CharacterViewModel::class.java) -> {
-                CharacterViewModel(getCharactersUseCase,ioDispatcher) as T
+                CharacterViewModel(getCharactersUseCase, ioDispatcher) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }

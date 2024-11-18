@@ -24,6 +24,6 @@ object DataModule {
         repository: CharacterRepository,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): GetCharactersUseCase {
-        return GetCharactersUseCase(repository,ioDispatcher)
+        return GetCharactersUseCase(repository, ioDispatcher)
     }
 }

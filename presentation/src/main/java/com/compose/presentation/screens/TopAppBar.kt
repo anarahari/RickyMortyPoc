@@ -23,19 +23,30 @@ fun CustomAppBar(
     title: String,
     onBackButtonPressed: (() -> Unit)? = null
 ) {
-    Row(modifier = Modifier.fillMaxWidth()
-        .height(72.dp)
-        .background(MaterialTheme.colorScheme.background),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(72.dp)
+            .background(MaterialTheme.colorScheme.background),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically) {
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         onBackButtonPressed?.let {
-            Box(modifier = Modifier.clickable { onBackButtonPressed }
-                .padding(8.dp)) {
-                Icon(painter = painterResource(R.drawable.ic_back_arrow), contentDescription = "Back Arrow")
+            Box(
+                modifier = Modifier
+                    .clickable { onBackButtonPressed }
+                    .padding(8.dp)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_back_arrow),
+                    contentDescription = "Back Arrow"
+                )
             }
         }
-        Text(text = title,
+        Text(
+            text = title,
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onBackground)
+            color = MaterialTheme.colorScheme.onBackground
+        )
     }
 }
