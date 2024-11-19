@@ -27,7 +27,7 @@ class CharacterViewModel @Inject constructor(
         getCharacters()
     }
 
-    private fun getCharacters() {
+    fun getCharacters() {
         viewModelScope.launch(ioDispatcher) {
             characterUseCase.getCharacters().catch {
                 _charactersState.emit(UiState(error = it.message.toString()))
