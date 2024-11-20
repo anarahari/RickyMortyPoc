@@ -25,10 +25,10 @@ class GetCharactersUseCaseTest {
     private lateinit var repository: CharacterTestRepository
 
     @Before
-    fun setUp(){
+    fun setUp() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
-        charactersUseCase = GetCharactersUseCase(repository,testDispatcher)
+        charactersUseCase = GetCharactersUseCase(repository, testDispatcher)
     }
 
     @Test
@@ -47,7 +47,7 @@ class GetCharactersUseCaseTest {
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         Dispatchers.resetMain()
     }
 }

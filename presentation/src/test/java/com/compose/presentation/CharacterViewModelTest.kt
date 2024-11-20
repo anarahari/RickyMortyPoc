@@ -73,13 +73,9 @@ class CharacterViewModelTest {
                 status = "Alive"
             )
         )
-        coEvery { charactersUseCase.getCharacters() } returns (
-                flowOf(
-                    Resource.Success(
-                        characters
-                    )
-                )
-                )
+        coEvery { charactersUseCase.getCharacters() } returns flowOf(
+            Resource.Success(characters)
+        )
 
         viewModel.getCharacters()
         viewModel.charactersState.test {
@@ -95,10 +91,9 @@ class CharacterViewModelTest {
         coEvery { charactersUseCase.getCharacters() } returns flow {
             emit(Resource.Error(exception.message.toString()))
         }
-        // When
+
         viewModel.getCharacters()
 
-        // Then
         viewModel.charactersState.test {
             assertTrue(awaitItem() is UiState)
             assertEquals(UiState(error = exception.message.toString()), awaitItem())
@@ -109,5 +104,4 @@ class CharacterViewModelTest {
     fun tearDown() {
         Dispatchers.resetMain()
     }
-
 }

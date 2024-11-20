@@ -32,6 +32,4 @@ class CharacterTestRepository : CharacterRepository {
         )
         return characters
     }
-
-
 }
