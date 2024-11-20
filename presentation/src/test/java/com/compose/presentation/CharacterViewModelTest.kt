@@ -8,7 +8,7 @@ import com.compose.presentation.uistate.UiState
 import com.compose.presentation.viewmodel.CharacterViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.mockk
+import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -26,6 +26,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class CharacterViewModelTest {
     private lateinit var viewModel: CharacterViewModel
+    @RelaxedMockK
     private lateinit var charactersUseCase: GetCharactersUseCase
     private val testDispatcher = StandardTestDispatcher()
 
@@ -33,7 +34,6 @@ class CharacterViewModelTest {
     fun setUp() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
-        charactersUseCase = mockk(relaxed = true)
         viewModel = CharacterViewModel(charactersUseCase, testDispatcher)
     }
 
@@ -73,7 +73,7 @@ class CharacterViewModelTest {
                 status = "Alive"
             )
         )
-        coEvery { charactersUseCase.getCharacters() } returns flowOf(
+        coEvery { charactersUseCase.invoke() } returns flowOf(
             Resource.Success(characters)
         )
 
@@ -88,7 +88,7 @@ class CharacterViewModelTest {
     @Test
     fun `return characters list to give error`() = runTest(testDispatcher) {
         val exception = RuntimeException("Error fetching character results")
-        coEvery { charactersUseCase.getCharacters() } returns flow {
+        coEvery { charactersUseCase.invoke() } returns flow {
             emit(Resource.Error(exception.message.toString()))
         }
 

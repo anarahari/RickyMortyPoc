@@ -34,7 +34,7 @@ class GetCharactersUseCaseTest {
     @Test
     fun `get list of characters on success`() = runTest(testDispatcher) {
         val expectedCharacters = repository.getCharacters()
-        val result = charactersUseCase.getCharacters()
+        val result = charactersUseCase.invoke()
         assertEquals(expectedCharacters, result.last().data)
     }
 
@@ -42,7 +42,7 @@ class GetCharactersUseCaseTest {
     fun `get list of characters on failure`() = runTest(testDispatcher) {
         val exception = RuntimeException("Error fetching character results")
         coEvery { repository.getCharacters() } throws exception
-        val result = charactersUseCase.getCharacters()
+        val result = charactersUseCase.invoke()
         assertEquals("Error fetching character results", result.last().message)
     }
 
