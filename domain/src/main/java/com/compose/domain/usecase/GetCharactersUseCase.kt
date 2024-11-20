@@ -21,6 +21,6 @@ class GetCharactersUseCase @Inject constructor(
         val characters = characterRepository.getCharacters()
         emit(Resource.Success(characters))
     }.catch {
-        emit(Resource.Error(it.message.toString() ?: "An Unexpected error occurred"))
+        emit(Resource.Error(it.message ?: "An Unexpected error occurred"))
     }.flowOn(ioDispatcher)
 }

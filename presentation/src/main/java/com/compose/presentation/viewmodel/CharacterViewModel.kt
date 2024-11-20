@@ -20,7 +20,7 @@ class CharacterViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _charactersState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    private val _charactersState: MutableStateFlow<UiState> = MutableStateFlow(UiState(isLoading = true))
     val charactersState: StateFlow<UiState> = _charactersState.asStateFlow()
 
     init {
