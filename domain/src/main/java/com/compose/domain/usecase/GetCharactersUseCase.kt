@@ -16,11 +16,11 @@ class GetCharactersUseCase @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    fun getCharacters(): Flow<Resource<List<CharacterModel?>>> = flow {
+    fun invoke(): Flow<Resource<List<CharacterModel?>>> = flow {
         emit(Resource.Loading())
         val characters = characterRepository.getCharacters()
         emit(Resource.Success(characters))
     }.catch {
-        emit(Resource.Error(it.message.toString() ?: "An Unexpected error occurred"))
+        emit(Resource.Error(it.message ?: "An Unexpected error occurred"))
     }.flowOn(ioDispatcher)
 }
