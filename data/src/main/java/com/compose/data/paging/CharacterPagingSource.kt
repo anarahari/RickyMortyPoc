@@ -16,7 +16,6 @@ class CharacterPagingSource(
         val page = params.key ?: 1
 
         return try {
-            // val response = apolloClient.query(GetCharactersQuery(Optional.present(page))).execute()
             val response = apolloClient.query(GetCharactersQuery()).execute()
             // Check for errors in the response
             if (response.hasErrors()) {
@@ -24,11 +23,6 @@ class CharacterPagingSource(
             } else {
                 val characters = response.data?.characters?.results?.filterNotNull() ?: emptyList()
                 val nextKey = page + 1
-                    /*if (response.data?.characters?.info?.next != null) {
-                        page + 1
-                    } else {
-                        null
-                    }*/
 
                 LoadResult.Page(
                     data = characters,
