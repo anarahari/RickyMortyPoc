@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - '*'
-  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   build:
@@ -42,10 +41,12 @@ jobs:
       - name: Clean and Build with Gradle
         run: ./gradlew clean build
 
-      # Step 6: Run unit tests
+      # Step 6: Run kotlin lint check
+      - name: Run kotlin lint check
+        run: ./gradlew ktlintCheck
+
+      # Step 7: Run unit tests
       - name: Run unit tests
         run: ./gradlew test
 
-      # Step 7: Run kotlin lint check
-      - name: Run kotlin lint check
-        run: ./gradlew ktlintCheck
+
