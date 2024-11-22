@@ -7,7 +7,7 @@ data class CharacterModel(
     val gender: String,
     val species: String,
     val status: String,
-    val created: String,
+    val created: String? = null,
     val origin: OriginModel = OriginModel(),
     val episodes: List<EpisodeModel> = emptyList(),
 )

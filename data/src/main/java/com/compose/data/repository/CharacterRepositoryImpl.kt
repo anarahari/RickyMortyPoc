@@ -21,4 +21,8 @@ internal class CharacterRepositoryImpl @Inject constructor(private val apolloCli
             emptyList()
         }
     }
+
+    override suspend fun getCharacterDetails(id: String): CharacterModel? {
+        TODO("Not yet implemented")
+    }
 }
