@@ -15,7 +15,7 @@ class GetCharacterDetailsUseCase @Inject constructor(
     private val characterRepository: CharacterRepository,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {
-    fun invoke(id : String): Flow<Resource<CharacterModel?>> = flow {
+    fun invoke(id: String): Flow<Resource<CharacterModel?>> = flow {
         emit(Resource.Loading())
         val characters = characterRepository.getCharacterDetails(id)
         emit(Resource.Success(characters))
