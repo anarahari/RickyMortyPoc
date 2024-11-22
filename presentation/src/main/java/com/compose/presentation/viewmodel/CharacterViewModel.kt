@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class CharacterViewModel @Inject constructor(
     private val characterUseCase: GetCharactersUseCase,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) :
     ViewModel() {
 
@@ -31,7 +31,7 @@ class CharacterViewModel @Inject constructor(
      * Get List of characters
      * **/
     fun getCharacters() {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch(coroutineDispatcher) {
             characterUseCase.invoke().catch {
                 _charactersState.emit(UiState(error = it.message.toString()))
             }.collect { result ->

@@ -13,8 +13,8 @@ class ViewModelModule {
     @Singleton
     fun provideViewModelFactory(
         getCharactersUseCase: GetCharactersUseCase,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
     ): ViewModelFactoryProvider {
-        return ViewModelFactoryProvider(getCharactersUseCase, ioDispatcher)
+        return ViewModelFactoryProvider(getCharactersUseCase, coroutineDispatcher)
     }
 }

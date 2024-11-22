@@ -10,12 +10,12 @@ import javax.inject.Inject
 class ViewModelFactoryProvider
 @Inject constructor(
     private val getCharactersUseCase: GetCharactersUseCase,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(CharacterViewModel::class.java) -> {
-                CharacterViewModel(getCharactersUseCase, ioDispatcher) as T
+                CharacterViewModel(getCharactersUseCase, coroutineDispatcher) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }

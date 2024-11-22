@@ -22,8 +22,8 @@ object DataModule {
     @Singleton
     fun provideCharacterCase(
         repository: CharacterRepository,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
     ): GetCharactersUseCase {
-        return GetCharactersUseCase(repository, ioDispatcher)
+        return GetCharactersUseCase(repository, coroutineDispatcher)
     }
 }
