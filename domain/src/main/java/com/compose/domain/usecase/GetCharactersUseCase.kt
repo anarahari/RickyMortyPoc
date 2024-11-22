@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class GetCharactersUseCase @Inject constructor(
     private val characterRepository: CharacterRepository,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {
 
     fun invoke(): Flow<Resource<List<CharacterModel?>>> = flow {
@@ -22,5 +22,5 @@ class GetCharactersUseCase @Inject constructor(
         emit(Resource.Success(characters))
     }.catch {
         emit(Resource.Error(it.message ?: "An Unexpected error occurred"))
-    }.flowOn(ioDispatcher)
+    }.flowOn(coroutineDispatcher)
 }
