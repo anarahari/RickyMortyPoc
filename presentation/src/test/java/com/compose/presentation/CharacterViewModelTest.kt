@@ -25,7 +25,7 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class CharacterViewModelTest {
-    private lateinit var viewModel: CharacterViewModel
+    private lateinit var SUT: CharacterViewModel
     @RelaxedMockK
     private lateinit var charactersUseCase: GetCharactersUseCase
     private val testDispatcher = StandardTestDispatcher()
@@ -34,15 +34,15 @@ class CharacterViewModelTest {
     fun setUp() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
-        viewModel = CharacterViewModel(charactersUseCase, testDispatcher)
+        SUT = CharacterViewModel(charactersUseCase, testDispatcher)
     }
 
     @Test
     fun `while fetching characters list check if the charactersState is in loading state`() =
         runTest(testDispatcher) {
-            val currentState = viewModel.charactersState.value
+            val currentState = SUT.charactersState.value
             assertEquals(UiState(isLoading = true), currentState)
-            assertTrue(viewModel.charactersState.value is UiState)
+            assertTrue(SUT.charactersState.value is UiState)
         }
 
     @Test
@@ -77,8 +77,8 @@ class CharacterViewModelTest {
             Resource.Success(characters)
         )
 
-        viewModel.getCharacters()
-        viewModel.charactersState.test {
+        SUT.getCharacters()
+        SUT.charactersState.test {
             assertTrue(awaitItem() is UiState)
             assertEquals(characters, (awaitItem() as UiState).data)
             cancelAndIgnoreRemainingEvents()
@@ -86,15 +86,15 @@ class CharacterViewModelTest {
     }
 
     @Test
-    fun `return characters list to give error`() = runTest(testDispatcher) {
+    fun `while fetching characters list test for runtime exception to show error`() = runTest(testDispatcher) {
         val exception = RuntimeException("Error fetching character results")
         coEvery { charactersUseCase.invoke() } returns flow {
             emit(Resource.Error(exception.message.toString()))
         }
 
-        viewModel.getCharacters()
+        SUT.getCharacters()
 
-        viewModel.charactersState.test {
+        SUT.charactersState.test {
             assertTrue(awaitItem() is UiState)
             assertEquals(UiState(error = exception.message.toString()), awaitItem())
         }

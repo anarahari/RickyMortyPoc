@@ -19,7 +19,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class GetCharactersUseCaseTest {
 
-    private lateinit var charactersUseCase: GetCharactersUseCase
+    private lateinit var SUT: GetCharactersUseCase
     private val testDispatcher = StandardTestDispatcher()
     @RelaxedMockK
     private lateinit var repository: CharacterTestRepository
@@ -28,21 +28,21 @@ class GetCharactersUseCaseTest {
     fun setUp() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
-        charactersUseCase = GetCharactersUseCase(repository, testDispatcher)
+        SUT = GetCharactersUseCase(repository, testDispatcher)
     }
 
     @Test
     fun `get list of characters on success`() = runTest(testDispatcher) {
         val expectedCharacters = repository.getCharacters()
-        val result = charactersUseCase.invoke()
+        val result = SUT.invoke()
         assertEquals(expectedCharacters, result.last().data)
     }
 
     @Test
-    fun `get list of characters on failure`() = runTest(testDispatcher) {
+    fun `while fetching characters list test for runtime exception to show error`() = runTest(testDispatcher) {
         val exception = RuntimeException("Error fetching character results")
         coEvery { repository.getCharacters() } throws exception
-        val result = charactersUseCase.invoke()
+        val result = SUT.invoke()
         assertEquals("Error fetching character results", result.last().message)
     }
 
