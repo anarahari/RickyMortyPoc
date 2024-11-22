@@ -23,7 +23,6 @@ class CharacterPagingSource(
             } else {
                 val characters = response.data?.characters?.results?.filterNotNull() ?: emptyList()
                 val nextKey = page + 1
-
                 LoadResult.Page(
                     data = characters,
                     prevKey = if (page == 1) null else page - 1,
