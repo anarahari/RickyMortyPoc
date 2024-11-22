@@ -5,4 +5,5 @@ import com.compose.domain.mapper.CharacterModel
 interface CharacterRepository {
 
     suspend fun getCharacters(): List<CharacterModel?>
+    suspend fun getCharacterDetails(id : String): CharacterModel?
 }
