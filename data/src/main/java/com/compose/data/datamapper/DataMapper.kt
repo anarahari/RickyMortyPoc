@@ -55,4 +55,3 @@ fun GetCharacterDetailsQuery.Episode.toEpisodeModel(): List<EpisodeModel> {
         )
     )
 }
-
