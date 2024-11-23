@@ -1,7 +1,9 @@
 package com.compose.data.repository
 
 import com.apollographql.apollo.ApolloClient
+import com.common.graphql.GetCharacterDetailsQuery
 import com.common.graphql.GetCharactersQuery
+import com.compose.data.datamapper.getCharacterDetailsQueryToCharacterModel
 import com.compose.data.datamapper.getCharactersQueryToCharacterModel
 import com.compose.domain.mapper.CharacterModel
 import com.compose.domain.repository.CharacterRepository
@@ -23,6 +25,12 @@ internal class CharacterRepositoryImpl @Inject constructor(private val apolloCli
     }
 
     override suspend fun getCharacterDetails(id: String): CharacterModel? {
-        TODO("Not yet implemented")
+        return try {
+            val response = apolloClient.query(GetCharacterDetailsQuery(id)).execute()
+            val results = getCharacterDetailsQueryToCharacterModel(response.data)
+            results
+        } catch (ex: Exception) {
+            CharacterModel()
+        }
     }
 }

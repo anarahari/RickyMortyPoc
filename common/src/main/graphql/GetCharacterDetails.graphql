@@ -1,0 +1,24 @@
+query GetCharacterDetails($characterId: ID!) {
+    character(id: $characterId) {
+        id
+        image
+        name
+        gender
+        origin {
+            type
+            name
+            id
+            dimension
+            created
+        }
+        species
+        status
+        episode {
+            id
+            name
+            created
+            air_date
+            episode
+        }
+    }
+}

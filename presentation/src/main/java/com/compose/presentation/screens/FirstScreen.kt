@@ -67,7 +67,7 @@ private fun CharactersList(characterList: List<CharacterModel>) {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(characterList.size, key = { characterList[it].id }) { index ->
+        items(characterList.size, key = { characterList[it].id!! }) { index ->
             CharacterItem(character = characterList[index])
         }
     }
@@ -89,7 +89,7 @@ private fun CharacterItem(character: CharacterModel) {
                     .aspectRatio(1f)
             )
             Text(
-                text = character.name,
+                text = character.name.orEmpty(),
                 modifier = Modifier
                     .padding(8.dp)
                     .align(Alignment.BottomCenter),

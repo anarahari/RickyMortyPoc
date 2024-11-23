@@ -1,15 +1,15 @@
 package com.compose.domain.mapper
 
 data class CharacterModel(
-    val id: String,
-    val name: String,
-    val image: String,
-    val gender: String,
-    val species: String,
-    val status: String,
+    val id: String? = null,
+    val name: String? = null,
+    val image: String? = null,
+    val gender: String? = null,
+    val species: String? = null,
+    val status: String? = null,
     val created: String? = null,
     val origin: OriginModel = OriginModel(),
-    val episodes: List<EpisodeModel> = emptyList(),
+    val episodes: List<List<EpisodeModel>>? = emptyList(),
 )
 
 data class OriginModel(
