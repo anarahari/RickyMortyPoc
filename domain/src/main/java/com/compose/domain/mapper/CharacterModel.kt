@@ -9,7 +9,8 @@ data class CharacterModel(
     val status: String? = null,
     val created: String? = null,
     val origin: OriginModel = OriginModel(),
-    val episodes: List<List<EpisodeModel>>? = emptyList(),
+    val location: LocationModel = LocationModel(),
+    val episodes: List<EpisodeModel>? = emptyList(),
 )
 
 data class OriginModel(
@@ -18,6 +19,12 @@ data class OriginModel(
     val type: String? = null,
     val dimension: String? = null,
     val created: String? = null,
+)
+
+data class LocationModel(
+    val id: String? = null,
+    val name: String? = null,
+    val dimension: String? = null
 )
 
 data class EpisodeModel(

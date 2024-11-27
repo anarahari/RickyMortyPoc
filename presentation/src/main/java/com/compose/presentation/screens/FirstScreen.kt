@@ -1,5 +1,6 @@
 package com.compose.presentation.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,9 +30,14 @@ import com.compose.presentation.viewmodel.CharacterViewModel
 
 @Composable
 fun CharacterListScreen(
-    viewModel: CharacterViewModel, toolbarTitle: String,
-    modifier: Modifier = Modifier
+    viewModel: CharacterViewModel,
+    toolbarTitle: String,
+    modifier: Modifier = Modifier,
+    onNavigateCharacterDetails: (String) -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.getCharacters()
+    }
     val characterState by viewModel.charactersState.collectAsStateWithLifecycle()
     Column(
         modifier = modifier
@@ -54,13 +61,16 @@ fun CharacterListScreen(
 
         characterState.data?.let {
             val charactersList = remember { characterState.data }
-            CharactersList(charactersList as List<CharacterModel>)
+            CharactersList(charactersList as List<CharacterModel>, onNavigateCharacterDetails)
         }
     }
 }
 
 @Composable
-private fun CharactersList(characterList: List<CharacterModel>) {
+private fun CharactersList(
+    characterList: List<CharacterModel>,
+    onNavigateCharacterDetails: (String) -> Unit
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxWidth(),
@@ -69,17 +79,20 @@ private fun CharactersList(characterList: List<CharacterModel>) {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(characterList.size, key = { characterList[it].id!! }) { index ->
-            CharacterItem(character = characterList[index])
+            CharacterItem(character = characterList[index], onNavigateCharacterDetails)
         }
     }
 }
 
 @Composable
-private fun CharacterItem(character: CharacterModel) {
+private fun CharacterItem(character: CharacterModel, onNavigateCharacterDetails: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .clickable {
+                onNavigateCharacterDetails(character.id ?: "")
+            }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(

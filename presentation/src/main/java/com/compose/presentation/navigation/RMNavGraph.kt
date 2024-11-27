@@ -7,21 +7,32 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.compose.presentation.R
+import com.compose.presentation.screens.CharacterDetailsScreen
 import com.compose.presentation.screens.CharacterListScreen
 import com.compose.presentation.viewmodel.CharacterViewModel
 
 @Composable
-fun RMNavGraph(characterViewModel: CharacterViewModel){
+fun RMNavGraph(characterViewModel: CharacterViewModel) {
     val navController = rememberNavController()
-    val onNavigateCharacterDetails: (String) -> Unit = { characterId: String -> navController.navigate(RouteCharacterDetails(characterId = characterId)) }
+    val onNavigateCharacterDetails: (String) -> Unit =
+        { characterId: String -> navController.navigate(RouteCharacterDetails(characterId = characterId)) }
 
-    NavHost(navController = navController, startDestination = RouteCharacterList){
+    NavHost(navController = navController, startDestination = RouteCharacterList) {
         composable<RouteCharacterList> {
-            CharacterListScreen(characterViewModel, stringResource(R.string.all_characters))
+            CharacterListScreen(
+                characterViewModel, stringResource(R.string.all_characters),
+                onNavigateCharacterDetails = onNavigateCharacterDetails
+            )
         }
         composable<RouteCharacterDetails> { navBackStackEntry ->
-            val characterDetails : RouteCharacterDetails = navBackStackEntry.toRoute()
-
+            val characterDetails: RouteCharacterDetails = navBackStackEntry.toRoute()
+            CharacterDetailsScreen(
+                characterViewModel, characterDetails.characterId,
+                stringResource(R.string.character_details),
+                onBackButtonPressed = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

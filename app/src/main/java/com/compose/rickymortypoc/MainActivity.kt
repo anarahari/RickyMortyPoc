@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.compose.rememberNavController
 import com.compose.presentation.navigation.RMNavGraph
 import com.compose.presentation.ui.theme.RMAppTheme
 import com.compose.presentation.viewmodel.CharacterViewModel
@@ -27,8 +26,6 @@ class MainActivity : ComponentActivity() {
                         LocalContext.current as ComponentActivity,
                         viewModelFactoryProvider
                     )[CharacterViewModel::class.java]
-                val navController = rememberNavController()
-                //CharacterListScreen(characterViewModel)
                 RMNavGraph(characterViewModel)
             }
         }

@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.serialization.plugin)
-
 }
 
 android {

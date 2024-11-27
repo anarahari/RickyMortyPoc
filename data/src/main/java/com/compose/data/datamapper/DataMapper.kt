@@ -4,6 +4,7 @@ import com.common.graphql.GetCharacterDetailsQuery
 import com.common.graphql.GetCharactersQuery
 import com.compose.domain.mapper.CharacterModel
 import com.compose.domain.mapper.EpisodeModel
+import com.compose.domain.mapper.LocationModel
 import com.compose.domain.mapper.OriginModel
 
 fun getCharactersQueryToCharacterModel(results: GetCharactersQuery.Result?): CharacterModel? {
@@ -29,7 +30,8 @@ fun getCharacterDetailsQueryToCharacterModel(data: GetCharacterDetailsQuery.Data
             species = it.character?.species.orEmpty(),
             status = it.character?.status.orEmpty(),
             origin = it.character?.origin?.toOriginModel()!!,
-            episodes = it.character?.episode?.mapNotNull { episodes -> episodes?.toEpisodeModel() }
+            location = it.character?.location?.toLocationModel()!!,
+            episodes = mapToEpisodeModel(it.character?.episode),
         )
     }
 }
@@ -44,14 +46,28 @@ fun GetCharacterDetailsQuery.Origin.toOriginModel(): OriginModel {
     )
 }
 
-fun GetCharacterDetailsQuery.Episode.toEpisodeModel(): List<EpisodeModel> {
-    return listOf(
-        EpisodeModel(
-            name = this.name.orEmpty(),
-            airDate = this.air_date.orEmpty(),
-            episode = this.episode.orEmpty(),
-            created = this.created.orEmpty(),
-            id = this.id.orEmpty()
-        )
+fun GetCharacterDetailsQuery.Location.toLocationModel(): LocationModel {
+    return LocationModel(
+        name = this.name.orEmpty(),
+        dimension = this.dimension.orEmpty(),
+        id = this.id.orEmpty()
     )
+}
+
+fun mapToEpisodeModel(episodes: List<GetCharacterDetailsQuery.Episode?>?): List<EpisodeModel> {
+    val list = mutableListOf<EpisodeModel>()
+    episodes?.let {
+        for (episode in it) {
+            list.add(
+                EpisodeModel(
+                    name = episode?.name.orEmpty(),
+                    airDate = episode?.air_date.orEmpty(),
+                    episode = episode?.episode.orEmpty(),
+                    created = episode?.created.orEmpty(),
+                    id = episode?.id.orEmpty()
+                )
+            )
+        }
+    }
+    return list
 }

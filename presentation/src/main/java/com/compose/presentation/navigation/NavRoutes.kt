@@ -3,7 +3,7 @@ package com.compose.presentation.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-object  RouteCharacterList
+object RouteCharacterList
 
 @Serializable
-data class  RouteCharacterDetails(val characterId : String)
+data class RouteCharacterDetails(val characterId: String)

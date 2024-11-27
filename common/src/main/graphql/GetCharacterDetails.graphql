@@ -20,5 +20,10 @@ query GetCharacterDetails($characterId: ID!) {
             air_date
             episode
         }
+        location {
+            id
+            name
+            dimension
+        }
     }
 }

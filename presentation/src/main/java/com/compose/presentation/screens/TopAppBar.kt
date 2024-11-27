@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.compose.presentation.R
+import com.compose.presentation.ui.theme.dimens
 
 @Composable
 fun CustomAppBar(
@@ -28,25 +29,25 @@ fun CustomAppBar(
             .fillMaxWidth()
             .height(72.dp)
             .background(MaterialTheme.colorScheme.background),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
         onBackButtonPressed?.let {
             Box(
                 modifier = Modifier
-                    .clickable { onBackButtonPressed }
-                    .padding(8.dp)
+                    .clickable { onBackButtonPressed() }
+                    .padding(MaterialTheme.dimens.padding8dp)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_back_arrow),
-                    contentDescription = "Back Arrow"
+                    contentDescription = "Back Arrow",
                 )
             }
         }
         Text(
             text = title,
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
         )
     }
 }
