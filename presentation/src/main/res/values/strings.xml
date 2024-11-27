@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">RickyMortyPoc</string>
     <string name="all_characters">All characters</string>
+    <string name="character_details">Character details</string>
 </resources>

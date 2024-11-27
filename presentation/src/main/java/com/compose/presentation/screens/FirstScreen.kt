@@ -20,16 +20,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.compose.domain.mapper.CharacterModel
-import com.compose.presentation.R
 import com.compose.presentation.viewmodel.CharacterViewModel
 
 @Composable
-fun CharacterListScreen(viewModel: CharacterViewModel, modifier: Modifier = Modifier) {
+fun CharacterListScreen(
+    viewModel: CharacterViewModel, toolbarTitle: String,
+    modifier: Modifier = Modifier
+) {
     val characterState by viewModel.charactersState.collectAsStateWithLifecycle()
     Column(
         modifier = modifier
@@ -37,7 +38,7 @@ fun CharacterListScreen(viewModel: CharacterViewModel, modifier: Modifier = Modi
             .padding(8.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        CustomAppBar(stringResource(R.string.all_characters), null)
+        CustomAppBar(toolbarTitle, null)
 
         if (characterState.isLoading) {
             CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
