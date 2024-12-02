@@ -29,16 +29,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.compose.domain.mapper.CharacterModel
-import com.compose.domain.mapper.EpisodeModel
+import com.compose.domain.mapper.Character
+import com.compose.domain.mapper.Episode
 import com.compose.presentation.R
 import com.compose.presentation.ui.theme.dimens
 import com.compose.presentation.uistate.UiState
-import com.compose.presentation.viewmodel.CharacterViewModel
+import com.compose.presentation.viewmodel.CharacterDetailsViewModel
 
 @Composable
 fun CharacterDetailsScreen(
-    viewModel: CharacterViewModel,
+    viewModel: CharacterDetailsViewModel,
     characterId: String,
     toolbarTitle: String,
     onBackButtonPressed: () -> Unit
@@ -47,11 +47,11 @@ fun CharacterDetailsScreen(
         viewModel.getCharacterDetails(characterId)
     }
     val characterState by viewModel.characterDetailsState.collectAsStateWithLifecycle()
-    CharacterScreenLoadData(characterState, toolbarTitle, onBackButtonPressed = onBackButtonPressed)
+    CharacterDetailsItems(characterState, toolbarTitle, onBackButtonPressed = onBackButtonPressed)
 }
 
 @Composable
-fun CharacterScreenLoadData(
+fun CharacterDetailsItems(
     characterState: UiState,
     toolbarTitle: String,
     modifier: Modifier = Modifier,
@@ -60,7 +60,7 @@ fun CharacterScreenLoadData(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(MaterialTheme.dimens.padding8dp),
+            .padding(MaterialTheme.dimens.paddingSmall),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         CustomAppBar(toolbarTitle, onBackButtonPressed = onBackButtonPressed)
@@ -77,15 +77,15 @@ fun CharacterScreenLoadData(
         }
 
         characterState.data?.let {
-            DisplayData(it as CharacterModel)
+            DisplayCharacterDetailsData(modifier, it as Character)
         }
     }
 }
 
 @Composable
-fun DisplayData(
-    characterModel: CharacterModel,
-    modifier: Modifier = Modifier
+fun DisplayCharacterDetailsData(
+    modifier: Modifier = Modifier,
+    character: Character,
 ) {
     Column(modifier.verticalScroll(rememberScrollState())) {
         Box(
@@ -93,31 +93,31 @@ fun DisplayData(
             contentAlignment = Alignment.Center
         ) {
             AsyncImage(
-                model = characterModel.image,
-                contentDescription = characterModel.name,
+                model = character.image,
+                contentDescription = character.name,
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
             )
         }
-        Spacer(modifier.padding(top = MaterialTheme.dimens.padding20dp))
+        Spacer(modifier.padding(top = MaterialTheme.dimens.paddingExtraLarge))
         Text(
-            text = characterModel.name.orEmpty(),
+            text = character.name.orEmpty(),
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.headlineLarge,
             color = Color.Black,
-            modifier = modifier.padding(start = MaterialTheme.dimens.padding20dp)
+            modifier = modifier.padding(start = MaterialTheme.dimens.paddingExtraLarge)
         )
-        CharacterStatus(characterModel, modifier)
+        CharacterStatus(modifier, character)
     }
 }
 
 @Composable
-fun CharacterStatus(characterModel: CharacterModel, modifier: Modifier) {
+fun CharacterStatus(modifier: Modifier, character: Character) {
     Row(
         modifier = modifier.padding(
-            start = MaterialTheme.dimens.padding20dp,
-            top = MaterialTheme.dimens.padding16dp
+            start = MaterialTheme.dimens.paddingExtraLarge,
+            top = MaterialTheme.dimens.paddingLarge
         )
     ) {
         Text(
@@ -127,22 +127,22 @@ fun CharacterStatus(characterModel: CharacterModel, modifier: Modifier) {
             color = Color.Black
         )
         Text(
-            text = characterModel.status.orEmpty().uppercase(),
+            text = character.status.orEmpty().uppercase(),
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
-            modifier = modifier.padding(start = MaterialTheme.dimens.padding8dp),
+            modifier = modifier.padding(start = MaterialTheme.dimens.paddingSmall),
             color = Color.Black
         )
     }
-    CharacterSpecies(characterModel, modifier)
+    CharacterSpecies(modifier, character)
 }
 
 @Composable
-fun CharacterSpecies(characterModel: CharacterModel, modifier: Modifier) {
+fun CharacterSpecies(modifier: Modifier, character: Character) {
     Row(
         modifier = modifier.padding(
-            start = MaterialTheme.dimens.padding20dp,
-            top = MaterialTheme.dimens.padding8dp
+            start = MaterialTheme.dimens.paddingExtraLarge,
+            top = MaterialTheme.dimens.paddingSmall
         )
     ) {
         Text(
@@ -152,22 +152,22 @@ fun CharacterSpecies(characterModel: CharacterModel, modifier: Modifier) {
             color = Color.Black
         )
         Text(
-            text = characterModel.species.orEmpty().uppercase(),
+            text = character.species.orEmpty().uppercase(),
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
-            modifier = modifier.padding(start = MaterialTheme.dimens.padding8dp),
+            modifier = modifier.padding(start = MaterialTheme.dimens.paddingSmall),
             color = Color.Black
         )
     }
-    CharacterGender(characterModel, modifier)
+    CharacterGender(modifier, character)
 }
 
 @Composable
-fun CharacterGender(characterModel: CharacterModel, modifier: Modifier) {
+fun CharacterGender(modifier: Modifier, character: Character) {
     Row(
         modifier = modifier.padding(
-            start = MaterialTheme.dimens.padding20dp,
-            top = MaterialTheme.dimens.padding8dp
+            start = MaterialTheme.dimens.paddingExtraLarge,
+            top = MaterialTheme.dimens.paddingSmall
         )
     ) {
         Text(
@@ -177,29 +177,29 @@ fun CharacterGender(characterModel: CharacterModel, modifier: Modifier) {
             color = Color.Black
         )
         Text(
-            text = characterModel.gender.orEmpty().uppercase(),
+            text = character.gender.orEmpty().uppercase(),
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
-            modifier = modifier.padding(start = MaterialTheme.dimens.padding8dp),
+            modifier = modifier.padding(start = MaterialTheme.dimens.paddingSmall),
             color = Color.Black
         )
     }
-    CharacterOrigin(characterModel, modifier)
+    CharacterOrigin(modifier, character)
 }
 
 @Composable
-fun CharacterOrigin(characterModel: CharacterModel, modifier: Modifier) {
-    Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.padding20dp))
+fun CharacterOrigin(modifier: Modifier, character: Character) {
+    Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.paddingExtraLarge))
     Text(
         text = stringResource(R.string.origin),
         style = MaterialTheme.typography.headlineSmall,
         color = Color.Black,
-        modifier = modifier.padding(start = MaterialTheme.dimens.padding20dp)
+        modifier = modifier.padding(start = MaterialTheme.dimens.paddingExtraLarge)
     )
     Row(
         modifier = modifier.padding(
-            start = MaterialTheme.dimens.padding20dp,
-            top = MaterialTheme.dimens.padding12dp
+            start = MaterialTheme.dimens.paddingExtraLarge,
+            top = MaterialTheme.dimens.paddingMedium
         )
     ) {
         Text(
@@ -209,17 +209,17 @@ fun CharacterOrigin(characterModel: CharacterModel, modifier: Modifier) {
             color = Color.Black
         )
         Text(
-            text = characterModel.origin.name.orEmpty().uppercase(),
+            text = character.origin.name.orEmpty().uppercase(),
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
-            modifier = modifier.padding(start = MaterialTheme.dimens.padding8dp),
+            modifier = modifier.padding(start = MaterialTheme.dimens.paddingSmall),
             color = Color.Black
         )
     }
     Row(
         modifier = modifier.padding(
-            start = MaterialTheme.dimens.padding20dp,
-            top = MaterialTheme.dimens.padding8dp
+            start = MaterialTheme.dimens.paddingExtraLarge,
+            top = MaterialTheme.dimens.paddingSmall
         )
     ) {
         Text(
@@ -229,29 +229,29 @@ fun CharacterOrigin(characterModel: CharacterModel, modifier: Modifier) {
             color = Color.Black
         )
         Text(
-            text = characterModel.origin.dimension.orEmpty().uppercase(),
+            text = character.origin.dimension.orEmpty().uppercase(),
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
-            modifier = modifier.padding(start = MaterialTheme.dimens.padding8dp),
+            modifier = modifier.padding(start = MaterialTheme.dimens.paddingSmall),
             color = Color.Black
         )
     }
-    CharacterLocation(characterModel, modifier)
+    CharacterLocation(modifier, character)
 }
 
 @Composable
-fun CharacterLocation(characterModel: CharacterModel, modifier: Modifier) {
-    Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.padding20dp))
+fun CharacterLocation(modifier: Modifier, character: Character) {
+    Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.paddingExtraLarge))
     Text(
         text = stringResource(R.string.location),
         style = MaterialTheme.typography.headlineSmall,
         color = Color.Black,
-        modifier = modifier.padding(start = MaterialTheme.dimens.padding20dp)
+        modifier = modifier.padding(start = MaterialTheme.dimens.paddingExtraLarge)
     )
     Row(
         modifier = modifier.padding(
-            start = MaterialTheme.dimens.padding20dp,
-            top = MaterialTheme.dimens.padding12dp
+            start = MaterialTheme.dimens.paddingExtraLarge,
+            top = MaterialTheme.dimens.paddingMedium
         )
     ) {
         Text(
@@ -261,17 +261,17 @@ fun CharacterLocation(characterModel: CharacterModel, modifier: Modifier) {
             color = Color.Black
         )
         Text(
-            text = characterModel.location.name.orEmpty().uppercase(),
+            text = character.location.name.orEmpty().uppercase(),
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
-            modifier = modifier.padding(start = MaterialTheme.dimens.padding8dp),
+            modifier = modifier.padding(start = MaterialTheme.dimens.paddingSmall),
             color = Color.Black
         )
     }
     Row(
         modifier = modifier.padding(
-            start = MaterialTheme.dimens.padding20dp,
-            top = MaterialTheme.dimens.padding8dp
+            start = MaterialTheme.dimens.paddingExtraLarge,
+            top = MaterialTheme.dimens.paddingSmall
         )
     ) {
         Text(
@@ -281,55 +281,55 @@ fun CharacterLocation(characterModel: CharacterModel, modifier: Modifier) {
             color = Color.Black
         )
         Text(
-            text = characterModel.location.dimension.orEmpty().uppercase(),
+            text = character.location.dimension.orEmpty().uppercase(),
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
-            modifier = modifier.padding(start = MaterialTheme.dimens.padding8dp),
+            modifier = modifier.padding(start = MaterialTheme.dimens.paddingSmall),
             color = Color.Black
         )
     }
-    DisplayEpisodes(characterModel, modifier)
+    DisplayEpisodes(modifier, character)
 }
 
 @Composable
-fun DisplayEpisodes(characterModel: CharacterModel, modifier: Modifier) {
-    Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.padding20dp))
+fun DisplayEpisodes(modifier: Modifier, character: Character) {
+    Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.paddingExtraLarge))
     Text(
         text = stringResource(R.string.episodes),
         style = MaterialTheme.typography.headlineSmall,
         color = Color.Black,
-        modifier = modifier.padding(start = MaterialTheme.dimens.padding20dp)
+        modifier = modifier.padding(start = MaterialTheme.dimens.paddingExtraLarge)
     )
-    Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.padding12dp))
+    Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.paddingMedium))
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(all = MaterialTheme.dimens.padding16dp),
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimens.padding8dp)
+        contentPadding = PaddingValues(all = MaterialTheme.dimens.paddingLarge),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimens.paddingSmall)
     ) {
-        characterModel.episodes?.size?.let {
+        character.episodes?.size?.let {
             items(
                 it,
-                key = { item -> characterModel.episodes?.get(item)?.id!! }
+                key = { item -> character.episodes?.get(item)?.id!! }
             ) { index ->
-                EpisodesItem(episode = characterModel.episodes?.get(index)!!, modifier)
+                EpisodesItem(modifier, episode = character.episodes?.get(index)!!)
             }
         }
     }
 }
 
 @Composable
-fun EpisodesItem(episode: EpisodeModel, modifier: Modifier) {
+fun EpisodesItem(modifier: Modifier, episode: Episode) {
     Card(
         modifier = modifier
-            .padding(horizontal = MaterialTheme.dimens.padding8dp)
+            .padding(horizontal = MaterialTheme.dimens.paddingSmall)
             .width(MaterialTheme.dimens.cardWidth)
             .height(MaterialTheme.dimens.cardWidth)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(MaterialTheme.dimens.padding16dp)
+            modifier = Modifier.padding(MaterialTheme.dimens.paddingLarge)
         ) {
-            Text(text = episode.name, fontSize = MaterialTheme.typography.labelLarge.fontSize)
+            Text(text = episode.name.toString(), fontSize = MaterialTheme.typography.labelLarge.fontSize)
         }
     }
 }

@@ -2,72 +2,61 @@ package com.compose.data.datamapper
 
 import com.common.graphql.GetCharacterDetailsQuery
 import com.common.graphql.GetCharactersQuery
-import com.compose.domain.mapper.CharacterModel
-import com.compose.domain.mapper.EpisodeModel
-import com.compose.domain.mapper.LocationModel
-import com.compose.domain.mapper.OriginModel
+import com.compose.domain.mapper.Character
+import com.compose.domain.mapper.Episode
+import com.compose.domain.mapper.Location
+import com.compose.domain.mapper.Origin
 
-fun getCharactersQueryToCharacterModel(results: GetCharactersQuery.Result?): CharacterModel? {
+fun getCharactersQueryToCharacterModel(results: GetCharactersQuery.Result?): Character? {
     return results?.let {
-        CharacterModel(
-            id = it.character.id.orEmpty(),
-            name = it.character.name.orEmpty(),
-            image = it.character.image.orEmpty(),
-            gender = it.character.gender.orEmpty(),
-            species = it.character.species.orEmpty(),
-            status = it.character.status.orEmpty()
+        Character(
+            id = it.character.id,
+            name = it.character.name,
+            image = it.character.image,
+            gender = it.character.gender,
+            species = it.character.species,
+            status = it.character.status
         )
     }
 }
 
-fun getCharacterDetailsQueryToCharacterModel(data: GetCharacterDetailsQuery.Data?): CharacterModel? {
+fun getCharacterDetailsQueryToCharacterModel(data: GetCharacterDetailsQuery.Data?): Character? {
     return data?.let {
-        CharacterModel(
-            id = it.character?.id.orEmpty(),
-            name = it.character?.name.orEmpty(),
-            image = it.character?.image.orEmpty(),
-            gender = it.character?.gender.orEmpty(),
-            species = it.character?.species.orEmpty(),
-            status = it.character?.status.orEmpty(),
-            origin = it.character?.origin?.toOriginModel()!!,
-            location = it.character?.location?.toLocationModel()!!,
+        Character(
+            id = it.character?.id,
+            name = it.character?.name,
+            image = it.character?.image,
+            gender = it.character?.gender,
+            species = it.character?.species,
+            status = it.character?.status,
+            origin = mapToOriginModel(it.character?.origin),
+            location = mapToLocationModel(it.character?.location),
             episodes = mapToEpisodeModel(it.character?.episode),
         )
     }
 }
 
-fun GetCharacterDetailsQuery.Origin.toOriginModel(): OriginModel {
-    return OriginModel(
-        name = this.name.orEmpty(),
-        type = this.type.orEmpty(),
-        dimension = this.dimension.orEmpty(),
-        created = this.created.orEmpty(),
-        id = this.id.orEmpty()
+fun mapToOriginModel(origin: GetCharacterDetailsQuery.Origin?): Origin {
+    return Origin(
+        name = origin?.name,
+        dimension = origin?.dimension
     )
 }
 
-fun GetCharacterDetailsQuery.Location.toLocationModel(): LocationModel {
-    return LocationModel(
-        name = this.name.orEmpty(),
-        dimension = this.dimension.orEmpty(),
-        id = this.id.orEmpty()
+fun mapToLocationModel(location: GetCharacterDetailsQuery.Location?): Location {
+    return Location(
+        name = location?.name,
+        dimension = location?.dimension,
+        id = location?.id
     )
 }
 
-fun mapToEpisodeModel(episodes: List<GetCharacterDetailsQuery.Episode?>?): List<EpisodeModel> {
-    val list = mutableListOf<EpisodeModel>()
-    episodes?.let {
-        for (episode in it) {
-            list.add(
-                EpisodeModel(
-                    name = episode?.name.orEmpty(),
-                    airDate = episode?.air_date.orEmpty(),
-                    episode = episode?.episode.orEmpty(),
-                    created = episode?.created.orEmpty(),
-                    id = episode?.id.orEmpty()
-                )
-            )
-        }
+fun mapToEpisodeModel(episodes: List<GetCharacterDetailsQuery.Episode?>?): List<Episode>? {
+    return episodes?.map { episode ->
+        Episode(
+            id = episode?.id,
+            name = episode?.name,
+            airDate = episode?.air_date
+        )
     }
-    return list
 }

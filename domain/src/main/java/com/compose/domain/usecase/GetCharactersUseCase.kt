@@ -2,7 +2,7 @@ package com.compose.domain.usecase
 
 import com.compose.common.Resource
 import com.compose.common.module.IoDispatcher
-import com.compose.domain.mapper.CharacterModel
+import com.compose.domain.mapper.Character
 import com.compose.domain.repository.CharacterRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +16,7 @@ class GetCharactersUseCase @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {
 
-    fun invoke(): Flow<Resource<List<CharacterModel?>>> = flow {
+    fun invoke(): Flow<Resource<List<Character?>>> = flow {
         emit(Resource.Loading())
         val characters = characterRepository.getCharacters()
         emit(Resource.Success(characters))

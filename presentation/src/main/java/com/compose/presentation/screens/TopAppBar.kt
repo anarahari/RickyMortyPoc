@@ -36,7 +36,7 @@ fun CustomAppBar(
             Box(
                 modifier = Modifier
                     .clickable { onBackButtonPressed() }
-                    .padding(MaterialTheme.dimens.padding8dp)
+                    .padding(MaterialTheme.dimens.paddingSmall)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_back_arrow),

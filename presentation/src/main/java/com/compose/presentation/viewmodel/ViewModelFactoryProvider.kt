@@ -19,6 +19,11 @@ class ViewModelFactoryProvider
             modelClass.isAssignableFrom(CharacterViewModel::class.java) -> {
                 CharacterViewModel(
                     getCharactersUseCase,
+                    coroutineDispatcher
+                ) as T
+            }
+            modelClass.isAssignableFrom(CharacterDetailsViewModel::class.java) -> {
+                CharacterDetailsViewModel(
                     getCharacterDetailsUseCase,
                     coroutineDispatcher
                 ) as T

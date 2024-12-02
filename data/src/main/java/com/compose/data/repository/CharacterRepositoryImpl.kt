@@ -5,14 +5,14 @@ import com.common.graphql.GetCharacterDetailsQuery
 import com.common.graphql.GetCharactersQuery
 import com.compose.data.datamapper.getCharacterDetailsQueryToCharacterModel
 import com.compose.data.datamapper.getCharactersQueryToCharacterModel
-import com.compose.domain.mapper.CharacterModel
+import com.compose.domain.mapper.Character
 import com.compose.domain.repository.CharacterRepository
 import javax.inject.Inject
 
 internal class CharacterRepositoryImpl @Inject constructor(private val apolloClient: ApolloClient) :
     CharacterRepository {
 
-    override suspend fun getCharacters(): List<CharacterModel?> {
+    override suspend fun getCharacters(): List<Character?> {
         return try {
             val response = apolloClient.query(GetCharactersQuery()).execute()
             val results = response.data?.characters?.results?.map {
@@ -24,13 +24,12 @@ internal class CharacterRepositoryImpl @Inject constructor(private val apolloCli
         }
     }
 
-    override suspend fun getCharacterDetails(id: String): CharacterModel? {
+    override suspend fun getCharacterDetails(id: String): Character? {
         return try {
             val response = apolloClient.query(GetCharacterDetailsQuery(id)).execute()
-            val results = getCharacterDetailsQueryToCharacterModel(response.data)
-            results
+            getCharacterDetailsQueryToCharacterModel(response.data)
         } catch (ex: Exception) {
-            CharacterModel()
+            null
         }
     }
 }

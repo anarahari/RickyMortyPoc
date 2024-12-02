@@ -1,9 +1,9 @@
 package com.compose.domain.repository
 
-import com.compose.domain.mapper.CharacterModel
+import com.compose.domain.mapper.Character
 
 interface CharacterRepository {
 
-    suspend fun getCharacters(): List<CharacterModel?>
-    suspend fun getCharacterDetails(id: String): CharacterModel?
+    suspend fun getCharacters(): List<Character?>
+    suspend fun getCharacterDetails(id: String): Character?
 }
