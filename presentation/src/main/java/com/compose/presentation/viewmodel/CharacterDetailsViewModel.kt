@@ -19,7 +19,7 @@ class CharacterDetailsViewModel @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _characterDetailsState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    private val _characterDetailsState: MutableStateFlow<UiState> = MutableStateFlow(UiState(isLoading = true))
     val characterDetailsState: StateFlow<UiState> = _characterDetailsState.asStateFlow()
 
     /**
