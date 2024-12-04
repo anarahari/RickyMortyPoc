@@ -32,7 +32,7 @@ class GetCharacterDetailsUseCaseTest {
     fun setUp() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
-        SUT = GetCharacterDetailsUseCase(repository, testDispatcher)
+        SUT = GetCharacterDetailsUseCase(repository)
     }
 
     @Test
