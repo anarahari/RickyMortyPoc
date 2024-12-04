@@ -27,5 +27,6 @@ data class Location(
 data class Episode(
     val id: String? = null,
     val name: String? = null,
-    val airDate: String? = null
+    val airDate: String? = null,
+    val characters: List<Character?> = emptyList()
 )
