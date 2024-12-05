@@ -3,6 +3,8 @@ package com.compose.data.repository
 import com.apollographql.apollo.ApolloClient
 import com.common.graphql.GetCharacterDetailsQuery
 import com.common.graphql.GetCharactersQuery
+import com.compose.common.R
+import com.compose.common.Resource
 import com.compose.data.datamapper.getCharacterDetailsQueryToCharacterModel
 import com.compose.data.datamapper.getCharactersQueryToCharacterModel
 import com.compose.domain.mapper.Character
@@ -12,24 +14,36 @@ import javax.inject.Inject
 internal class CharacterRepositoryImpl @Inject constructor(private val apolloClient: ApolloClient) :
     CharacterRepository {
 
-    override suspend fun getCharacters(): List<Character?> {
+    override suspend fun getCharacters(): Resource<List<Character?>> {
         return try {
             val response = apolloClient.query(GetCharactersQuery()).execute()
+            if (response.hasErrors()) {
+                Resource.Error(
+                    IllegalStateException(response.errors?.joinToString { it.message }).toString(),
+                    R.string.resp_failure
+                )
+            }
             val results = response.data?.characters?.results?.map {
                 getCharactersQueryToCharacterModel(it)
             } ?: emptyList()
-            results
+            Resource.Success(data = results)
         } catch (ex: Exception) {
-            emptyList()
+            Resource.Error(ex.message.toString())
         }
     }
 
-    override suspend fun getCharacterDetails(id: String): Character? {
+    override suspend fun getCharacterDetails(id: String): Resource<Character?> {
         return try {
             val response = apolloClient.query(GetCharacterDetailsQuery(id)).execute()
-            getCharacterDetailsQueryToCharacterModel(response.data)
+            if (response.hasErrors()) {
+                Resource.Error(
+                    IllegalStateException(response.errors?.joinToString { it.message }).toString(),
+                    R.string.resp_failure
+                )
+            }
+            Resource.Success(data = getCharacterDetailsQueryToCharacterModel(response.data))
         } catch (ex: Exception) {
-            null
+            Resource.Error(ex.message.toString())
         }
     }
 }

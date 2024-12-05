@@ -18,11 +18,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RMAppTheme {
-//                val characterViewModel: CharacterViewModel =
-//                    ViewModelProvider(
-//                        LocalContext.current as ComponentActivity,
-//                        viewModelFactoryProvider
-//                    )[CharacterViewModel::class.java]
                 RMNavGraph(viewModelFactoryProvider)
             }
         }
