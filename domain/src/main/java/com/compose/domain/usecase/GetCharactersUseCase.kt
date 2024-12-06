@@ -11,11 +11,10 @@ import javax.inject.Inject
 class GetCharactersUseCase @Inject constructor(
     private val characterRepository: CharacterRepository
 ) {
-
     fun invoke(): Flow<Resource<List<Character?>>> = flow {
         emit(Resource.Loading())
         val characters = characterRepository.getCharacters()
-        emit(Resource.Success(characters))
+        emit(characters)
     }.catch {
         emit(Resource.Error(it.message ?: "An Unexpected error occurred"))
     }

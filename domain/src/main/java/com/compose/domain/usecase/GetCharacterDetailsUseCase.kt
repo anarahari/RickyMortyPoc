@@ -13,8 +13,8 @@ class GetCharacterDetailsUseCase @Inject constructor(
 ) {
     fun invoke(id: String): Flow<Resource<Character?>> = flow {
         emit(Resource.Loading())
-        val characters = characterRepository.getCharacterDetails(id)
-        emit(Resource.Success(characters))
+        val character = characterRepository.getCharacterDetails(id)
+        emit(character)
     }.catch {
         emit(Resource.Error(it.message ?: "An Unexpected error occurred"))
     }

@@ -16,12 +16,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,23 +25,17 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.compose.domain.mapper.Character
-import com.compose.presentation.viewmodel.CharacterViewModel
+import com.compose.presentation.uistate.UiState
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun CharacterListScreen(
-    viewModel: CharacterViewModel,
+    characters: StateFlow<UiState>,
     toolbarTitle: String,
     modifier: Modifier = Modifier,
     onNavigateCharacterDetails: (String) -> Unit
 ) {
-    var areCharactersFetched by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
-        if (!areCharactersFetched) {
-            areCharactersFetched = true
-            viewModel.getCharacters()
-        }
-    }
-    val characterState by viewModel.charactersState.collectAsStateWithLifecycle()
+    val characterState by characters.collectAsStateWithLifecycle()
     Column(
         modifier = modifier
             .fillMaxWidth()

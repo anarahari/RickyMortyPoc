@@ -52,14 +52,14 @@ fun getEpisodeDetailsQueryToEpisodeModel(results: GetEpisodeDetailsQuery.Episode
     }
 }
 
-fun mapToOriginModel(origin: GetCharacterDetailsQuery.Origin?): Origin {
+private fun mapToOriginModel(origin: GetCharacterDetailsQuery.Origin?): Origin {
     return Origin(
         name = origin?.name,
         dimension = origin?.dimension
     )
 }
 
-fun mapToLocationModel(location: GetCharacterDetailsQuery.Location?): Location {
+private fun mapToLocationModel(location: GetCharacterDetailsQuery.Location?): Location {
     return Location(
         name = location?.name,
         dimension = location?.dimension,
@@ -67,7 +67,7 @@ fun mapToLocationModel(location: GetCharacterDetailsQuery.Location?): Location {
     )
 }
 
-fun mapToEpisodeModel(episodes: List<GetCharacterDetailsQuery.Episode?>?): List<Episode>? {
+private fun mapToEpisodeModel(episodes: List<GetCharacterDetailsQuery.Episode?>?): List<Episode>? {
     return episodes?.map { episode ->
         Episode(
             id = episode?.id,
