@@ -1,5 +1,6 @@
 package com.compose.domain.usecase
 
+import com.compose.common.Resource
 import com.compose.domain.mapper.Character
 import com.compose.domain.mapper.Episode
 import com.compose.domain.repository.EpisodeRepository
@@ -54,7 +55,7 @@ class GetEpisodeDetailsUseCaseTest {
             )
         )
 
-        coEvery { repository.getEpisodeDetails("1") } returns episode
+        coEvery { repository.getEpisodeDetails("1") } returns Resource.Success(episode)
         val result = SUT.invoke(episodeId)
         assertEquals(episode, result.last().data)
     }
