@@ -1,6 +1,7 @@
 package com.compose.presentation.viewmodel
 
 import com.compose.common.module.IoDispatcher
+import com.compose.domain.usecase.GetCharacterDetailsUseCase
 import com.compose.domain.usecase.GetCharactersUseCase
 import dagger.Module
 import dagger.Provides
@@ -13,8 +14,13 @@ class ViewModelModule {
     @Singleton
     fun provideViewModelFactory(
         getCharactersUseCase: GetCharactersUseCase,
+        getCharacterDetailsUseCase: GetCharacterDetailsUseCase,
         @IoDispatcher coroutineDispatcher: CoroutineDispatcher
     ): ViewModelFactoryProvider {
-        return ViewModelFactoryProvider(getCharactersUseCase, coroutineDispatcher)
+        return ViewModelFactoryProvider(
+            getCharactersUseCase,
+            getCharacterDetailsUseCase,
+            coroutineDispatcher
+        )
     }
 }

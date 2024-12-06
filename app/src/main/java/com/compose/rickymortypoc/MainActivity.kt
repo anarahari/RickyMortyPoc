@@ -4,11 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.ViewModelProvider
-import com.compose.presentation.screens.CharacterListScreen
+import com.compose.presentation.navigation.RMNavGraph
 import com.compose.presentation.ui.theme.RMAppTheme
-import com.compose.presentation.viewmodel.CharacterViewModel
 import com.compose.presentation.viewmodel.ViewModelFactoryProvider
 import javax.inject.Inject
 
@@ -21,12 +18,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RMAppTheme {
-                val characterViewModel: CharacterViewModel =
-                    ViewModelProvider(
-                        LocalContext.current as ComponentActivity,
-                        viewModelFactoryProvider
-                    )[CharacterViewModel::class.java]
-                CharacterListScreen(characterViewModel)
+                RMNavGraph(viewModelFactoryProvider)
             }
         }
     }

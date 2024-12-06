@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetCharactersUseCase @Inject constructor(
+class GetCharacterDetailsUseCase @Inject constructor(
     private val characterRepository: CharacterRepository
 ) {
-    fun invoke(): Flow<Resource<List<Character?>>> = flow {
+    fun invoke(id: String): Flow<Resource<Character?>> = flow {
         emit(Resource.Loading())
-        val characters = characterRepository.getCharacters()
-        emit(characters)
+        val character = characterRepository.getCharacterDetails(id)
+        emit(character)
     }.catch {
         emit(Resource.Error(it.message ?: "An Unexpected error occurred"))
     }

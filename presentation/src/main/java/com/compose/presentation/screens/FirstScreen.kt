@@ -1,5 +1,6 @@
 package com.compose.presentation.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,24 +21,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.compose.domain.mapper.CharacterModel
-import com.compose.presentation.R
-import com.compose.presentation.viewmodel.CharacterViewModel
+import com.compose.domain.mapper.Character
+import com.compose.presentation.uistate.UiState
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun CharacterListScreen(viewModel: CharacterViewModel, modifier: Modifier = Modifier) {
-    val characterState by viewModel.charactersState.collectAsStateWithLifecycle()
+fun CharacterListScreen(
+    characters: StateFlow<UiState>,
+    toolbarTitle: String,
+    modifier: Modifier = Modifier,
+    onNavigateCharacterDetails: (String) -> Unit
+) {
+    val characterState by characters.collectAsStateWithLifecycle()
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        CustomAppBar(stringResource(R.string.all_characters), null)
+        CustomAppBar(toolbarTitle, null)
 
         if (characterState.isLoading) {
             CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
@@ -53,13 +58,16 @@ fun CharacterListScreen(viewModel: CharacterViewModel, modifier: Modifier = Modi
 
         characterState.data?.let {
             val charactersList = remember { characterState.data }
-            CharactersList(charactersList as List<CharacterModel>)
+            CharactersList(charactersList as List<Character>, onNavigateCharacterDetails)
         }
     }
 }
 
 @Composable
-private fun CharactersList(characterList: List<CharacterModel>) {
+private fun CharactersList(
+    characterList: List<Character>,
+    onNavigateCharacterDetails: (String) -> Unit
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxWidth(),
@@ -67,18 +75,21 @@ private fun CharactersList(characterList: List<CharacterModel>) {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(characterList.size, key = { characterList[it].id }) { index ->
-            CharacterItem(character = characterList[index])
+        items(characterList.size, key = { characterList[it].id.toString() }) { index ->
+            CharacterItem(character = characterList[index], onNavigateCharacterDetails)
         }
     }
 }
 
 @Composable
-private fun CharacterItem(character: CharacterModel) {
+private fun CharacterItem(character: Character, onNavigateCharacterDetails: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .clickable {
+                onNavigateCharacterDetails(character.id.orEmpty())
+            }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
@@ -89,7 +100,7 @@ private fun CharacterItem(character: CharacterModel) {
                     .aspectRatio(1f)
             )
             Text(
-                text = character.name,
+                text = character.name.orEmpty(),
                 modifier = Modifier
                     .padding(8.dp)
                     .align(Alignment.BottomCenter),

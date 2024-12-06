@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">RickyMortyPoc</string>
     <string name="all_characters">All characters</string>
+    <string name="character_details">Character details</string>
+    <string name="status">STATUS: </string>
+    <string name="species">SPECIES: </string>
+    <string name="gender">GENDER: </string>
+    <string name="origin">ORIGIN</string>
+    <string name="location">LOCATION</string>
+    <string name="episodes">EPISODES</string>
+    <string name="origin_name">NAME: </string>
+    <string name="origin_dimension">DIMENSION: </string>
+    <string name="location_name">NAME: </string>
+    <string name="location_dimension">DIMENSION: </string>
 </resources>

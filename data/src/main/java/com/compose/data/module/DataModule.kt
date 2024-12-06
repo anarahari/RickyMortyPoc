@@ -1,13 +1,12 @@
 package com.compose.data.module
 
 import com.apollographql.apollo.ApolloClient
-import com.compose.common.module.IoDispatcher
 import com.compose.data.repository.CharacterRepositoryImpl
 import com.compose.domain.repository.CharacterRepository
+import com.compose.domain.usecase.GetCharacterDetailsUseCase
 import com.compose.domain.usecase.GetCharactersUseCase
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -21,9 +20,16 @@ object DataModule {
     @Provides
     @Singleton
     fun provideCharacterCase(
-        repository: CharacterRepository,
-        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+        repository: CharacterRepository
     ): GetCharactersUseCase {
-        return GetCharactersUseCase(repository, coroutineDispatcher)
+        return GetCharactersUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCharacterDetailsCase(
+        repository: CharacterRepository
+    ): GetCharacterDetailsUseCase {
+        return GetCharacterDetailsUseCase(repository)
     }
 }
