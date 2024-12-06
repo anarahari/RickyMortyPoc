@@ -28,6 +28,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.compose.domain.mapper.Character
 import com.compose.domain.mapper.Episode
+import com.compose.domain.mapper.Location
+import com.compose.domain.mapper.Origin
 import com.compose.presentation.R
 import com.compose.presentation.ui.theme.dimens
 import com.compose.presentation.uistate.UiState
@@ -108,17 +110,17 @@ private fun DisplayCharacterDetailsData(
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(start = MaterialTheme.dimens.paddingExtraLarge)
         )
-        CharacterStatus(modifier, character)
-        CharacterSpecies(modifier, character)
-        CharacterGender(modifier, character)
-        CharacterOrigin(modifier, character)
-        CharacterLocation(modifier, character)
-        DisplayEpisodes(modifier, character)
+        CharacterStatus(modifier, character.status.toString())
+        CharacterSpecies(modifier, character.species.toString())
+        CharacterGender(modifier, character.gender.toString())
+        CharacterOrigin(modifier, character.origin)
+        CharacterLocation(modifier, character.location)
+        character.episodes?.let { DisplayEpisodes(modifier, it) }
     }
 }
 
 @Composable
-private fun CharacterStatus(modifier: Modifier = Modifier, character: Character) {
+private fun CharacterStatus(modifier: Modifier = Modifier, status: String) {
     Row(
         modifier = modifier.padding(
             start = MaterialTheme.dimens.paddingExtraLarge,
@@ -130,7 +132,7 @@ private fun CharacterStatus(modifier: Modifier = Modifier, character: Character)
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = character.status.orEmpty().uppercase(),
+            text = status.uppercase(),
             style = MaterialTheme.typography.titleMedium,
             modifier = modifier.padding(start = MaterialTheme.dimens.paddingSmall),
         )
@@ -138,7 +140,7 @@ private fun CharacterStatus(modifier: Modifier = Modifier, character: Character)
 }
 
 @Composable
-private fun CharacterSpecies(modifier: Modifier, character: Character) {
+private fun CharacterSpecies(modifier: Modifier, species: String) {
     Row(
         modifier = modifier.padding(
             start = MaterialTheme.dimens.paddingExtraLarge,
@@ -150,7 +152,7 @@ private fun CharacterSpecies(modifier: Modifier, character: Character) {
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = character.species.orEmpty().uppercase(),
+            text = species.uppercase(),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(start = MaterialTheme.dimens.paddingSmall)
         )
@@ -158,7 +160,7 @@ private fun CharacterSpecies(modifier: Modifier, character: Character) {
 }
 
 @Composable
-private fun CharacterGender(modifier: Modifier, character: Character) {
+private fun CharacterGender(modifier: Modifier, gender: String) {
     Row(
         modifier = modifier.padding(
             start = MaterialTheme.dimens.paddingExtraLarge,
@@ -170,7 +172,7 @@ private fun CharacterGender(modifier: Modifier, character: Character) {
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = character.gender.orEmpty().uppercase(),
+            text = gender.uppercase(),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(start = MaterialTheme.dimens.paddingSmall)
         )
@@ -178,7 +180,7 @@ private fun CharacterGender(modifier: Modifier, character: Character) {
 }
 
 @Composable
-private fun CharacterOrigin(modifier: Modifier, character: Character) {
+private fun CharacterOrigin(modifier: Modifier, origin: Origin) {
     Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.paddingExtraLarge))
     Text(
         text = stringResource(R.string.origin),
@@ -197,7 +199,7 @@ private fun CharacterOrigin(modifier: Modifier, character: Character) {
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = character.origin.name.orEmpty().uppercase(),
+            text = origin.name.toString().uppercase(),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(start = MaterialTheme.dimens.paddingSmall)
         )
@@ -213,7 +215,7 @@ private fun CharacterOrigin(modifier: Modifier, character: Character) {
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = character.origin.dimension.orEmpty().uppercase(),
+            text = origin.dimension.toString().uppercase(),
             style = MaterialTheme.typography.titleMedium,
             modifier = modifier.padding(start = MaterialTheme.dimens.paddingSmall),
         )
@@ -221,7 +223,7 @@ private fun CharacterOrigin(modifier: Modifier, character: Character) {
 }
 
 @Composable
-private fun CharacterLocation(modifier: Modifier, character: Character) {
+private fun CharacterLocation(modifier: Modifier, location: Location) {
     Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.paddingExtraLarge))
     Text(
         text = stringResource(R.string.location),
@@ -240,7 +242,7 @@ private fun CharacterLocation(modifier: Modifier, character: Character) {
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = character.location.name.orEmpty().uppercase(),
+            text = location.name.orEmpty().uppercase(),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(start = MaterialTheme.dimens.paddingSmall),
         )
@@ -256,7 +258,7 @@ private fun CharacterLocation(modifier: Modifier, character: Character) {
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = character.location.dimension.orEmpty().uppercase(),
+            text = location.dimension.orEmpty().uppercase(),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(start = MaterialTheme.dimens.paddingSmall)
         )
@@ -264,7 +266,7 @@ private fun CharacterLocation(modifier: Modifier, character: Character) {
 }
 
 @Composable
-private fun DisplayEpisodes(modifier: Modifier, character: Character) {
+private fun DisplayEpisodes(modifier: Modifier, episodes: List<Episode>) {
     Spacer(modifier = modifier.padding(top = MaterialTheme.dimens.paddingExtraLarge))
     Text(
         text = stringResource(R.string.episodes),
@@ -278,13 +280,11 @@ private fun DisplayEpisodes(modifier: Modifier, character: Character) {
         contentPadding = PaddingValues(all = MaterialTheme.dimens.paddingLarge),
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimens.paddingSmall)
     ) {
-        character.episodes?.size?.let {
-            items(
-                it,
-                key = { item -> character.episodes?.get(item)?.id!! }
-            ) { index ->
-                EpisodesItem(modifier, episode = character.episodes?.get(index)!!)
-            }
+        items(
+            episodes.size,
+            key = { item -> episodes[item].id.toString() }
+        ) { index ->
+            EpisodesItem(modifier, episode = episodes[index])
         }
     }
 }
