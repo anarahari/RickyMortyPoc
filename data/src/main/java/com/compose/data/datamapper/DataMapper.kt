@@ -2,6 +2,7 @@ package com.compose.data.datamapper
 
 import com.common.graphql.GetCharacterDetailsQuery
 import com.common.graphql.GetCharactersQuery
+import com.common.graphql.GetEpisodeDetailsQuery
 import com.compose.domain.mapper.Character
 import com.compose.domain.mapper.Episode
 import com.compose.domain.mapper.Location
@@ -32,6 +33,21 @@ fun getCharacterDetailsQueryToCharacterModel(data: GetCharacterDetailsQuery.Data
             origin = mapToOriginModel(it.character?.origin),
             location = mapToLocationModel(it.character?.location),
             episodes = mapToEpisodeModel(it.character?.episode),
+        )
+    }
+}
+
+fun getEpisodeDetailsQueryToEpisodeModel(results: GetEpisodeDetailsQuery.Episode?): Episode? {
+    return results?.let {
+        Episode(
+            name = it.name,
+            airDate = it.air_date,
+            characters = it.characters.map { data ->
+                Character(
+                    id = data?.id,
+                    image = data?.image
+                )
+            }
         )
     }
 }

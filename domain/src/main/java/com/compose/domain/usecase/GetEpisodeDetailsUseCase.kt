@@ -14,7 +14,7 @@ class GetEpisodeDetailsUseCase @Inject constructor(
     fun invoke(id: String): Flow<Resource<Episode?>> = flow {
         emit(Resource.Loading())
         val episodeDetails = episodeRepository.getEpisodeDetails(id)
-        emit(Resource.Success(episodeDetails))
+        emit(episodeDetails)
     }.catch {
         emit(Resource.Error(it.message ?: "An Unexpected error occurred"))
     }
